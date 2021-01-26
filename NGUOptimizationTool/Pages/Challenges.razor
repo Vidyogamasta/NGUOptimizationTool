@@ -1,0 +1,28 @@
+﻿@page "/challenges"
+@inject StateContainer State
+
+<div class="challenges container">
+    <h1 class="display-4">Challenges</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Challenge Name</th>
+                <th>Fastest/Last time</th>
+                <th>Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ChallengeComponent Name="Basic" MaxCompletions="5" ChallengeInfo="State.PlayerData.challenges.basicChallenge"></ChallengeComponent>
+            <ChallengeComponent Name="No Augs" MaxCompletions="5" ChallengeInfo="State.PlayerData.challenges.noAugsChallenge"></ChallengeComponent>
+            <ChallengeComponent Name="24 Hour" MaxCompletions="10" ChallengeInfo="State.PlayerData.challenges.hour24Challenge"></ChallengeComponent>
+            <ChallengeComponent Name="100 Level" MaxCompletions="5" ChallengeInfo="State.PlayerData.challenges.levelChallenge10k"></ChallengeComponent>
+            <ChallengeComponent Name="No Equipment" MaxCompletions="5" ChallengeInfo="State.PlayerData.challenges.noEquipmentChallenge"></ChallengeComponent>
+            <ChallengeComponent Name="Troll" MaxCompletions="7" ChallengeInfo="State.PlayerData.challenges.trollChallenge"></ChallengeComponent>
+            <ChallengeComponent Name="No Rebirth" MaxCompletions="10" ChallengeInfo="State.PlayerData.challenges.noRebirthChallenge"></ChallengeComponent>
+            <ChallengeComponent Name="Laser Sword" MaxCompletions="20" ChallengeInfo="State.PlayerData.challenges.laserSwordChallenge"></ChallengeComponent>
+            <ChallengeComponent Name="Blind" MaxCompletions="10" ChallengeInfo="State.PlayerData.challenges.blindChallenge"></ChallengeComponent>
+            <ChallengeComponent Name="No NGU" MaxCompletions="10" ChallengeInfo="State.PlayerData.challenges.nguChallenge"></ChallengeComponent>
+            <ChallengeComponent Name="No TM" MaxCompletions="10" ChallengeInfo="State.PlayerData.challenges.timeMachineChallenge"></ChallengeComponent>
+        </tbody>
+    </table>
+</div>

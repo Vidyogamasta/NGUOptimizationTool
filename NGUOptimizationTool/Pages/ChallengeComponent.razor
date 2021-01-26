@@ -1,0 +1,48 @@
+﻿
+<tr>
+    <td>@Name</td>
+    <td>@FormatTime(ChallengeInfo.bestTime)</td>
+    <td>
+        <span class="progress-wrapper">
+            @for (var i = 0; i < MaxCompletions; i++)
+            {
+                <span class="@ProgressClass(i, ChallengeInfo.curCompletions)"></span>
+            }
+        </span>
+        <span class="progress-wrapper">
+            @for (var i = 0; i < MaxCompletions; i++)
+            {
+                <span class="@ProgressClass(i, ChallengeInfo.curEvilCompletions)"></span>
+            }
+        </span>
+        <span class="progress-wrapper">
+            @for (var i = 0; i < MaxCompletions; i++)
+            {
+                <span class="@ProgressClass(i, ChallengeInfo.curSadisticCompletions)"></span>
+            }
+        </span>
+    </td>
+</tr>
+
+@code {
+    [Parameter]
+    public Challenge ChallengeInfo { get; set; }
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public int MaxCompletions { get; set; }
+
+
+
+    string ProgressClass(int challengenumber, int completed)
+    {
+        return completed > challengenumber ? "pip normal" : "pip incomplete";
+    }
+
+    string FormatTime(int seconds)
+    {
+        return $"{seconds / 60}:{seconds % 60}";
+    }
+}

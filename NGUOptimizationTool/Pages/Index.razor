@@ -1,0 +1,91 @@
+﻿@page "/"
+@using System.IO;
+@using System.Runtime.Serialization.Formatters.Binary;
+@using System.Security.Cryptography;
+@using Blazored.LocalStorage;
+@using Newtonsoft.Json;
+@inject NavigationManager NavigationManager
+@inject StateContainer State;
+@inject ILocalStorageService Storage;
+
+<h3>@StatusMessage</h3>
+
+<InputFile class="@{$"drag-drop-zone {DropClass}"}"
+           OnChange="HandleFileSelected"
+           @ondragenter="HandleDragEnter"
+           @ondragleave="HandleDragLeave"></InputFile>
+
+@code{
+    private string DropClass = "";
+    private string StatusMessage = "Drop or select NGU save file";
+
+    private void HandleDragEnter()
+    {
+        DropClass = "dropzone-drag";
+    }
+
+    private void HandleDragLeave()
+    {
+        DropClass = "";
+    }
+
+    async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        var file = files.FirstOrDefault();
+
+        if (file != null)
+        {
+            StatusMessage = "Loading...";
+
+            var playerData = await ReadSaveData(file);
+            if (playerData != null)
+            {
+                var storeData = JsonConvert.SerializeObject(playerData);
+                await Storage.SetItemAsync<string>("playerData", storeData);
+                State.PlayerData = playerData;
+
+                StatusMessage = $"Loaded successfully! Welcome, {playerData.playerName}";
+                NavigationManager.NavigateTo("summary");
+            }
+            else
+            {
+                StatusMessage = "Error loading save. Save is either in incorrect format, been corrupted, or is for an unsupported version.";
+            }
+        }
+    }
+
+    private async Task<PlayerData> ReadSaveData(IFileListEntry file)
+    {
+        using var stream = file.Data;
+
+        var content = await new StreamReader(stream).ReadToEndAsync();
+        var data = DeserializeBase64<SaveData>(content);
+        var checksum = GetChecksum(data.playerData);
+        if (checksum != data.checksum)
+        {
+            return null;
+        }
+
+        return DeserializeBase64<PlayerData>(data.playerData);
+
+    }
+
+    //Code sort of taken from ngu-save-analyzer
+    private static T DeserializeBase64<T>(string base64Data)
+    {
+        var bytes = Convert.FromBase64String(base64Data);
+        var formatter = new BinaryFormatter();
+
+        using (var memoryStream = new MemoryStream(bytes))
+        {
+            return (T)formatter.Deserialize(memoryStream);
+        }
+    }
+
+    private static string GetChecksum(string data)
+    {
+        var md5 = new MD5CryptoServiceProvider();
+
+        return Convert.ToBase64String(md5.ComputeHash(Convert.FromBase64String(data)));
+    }
+}

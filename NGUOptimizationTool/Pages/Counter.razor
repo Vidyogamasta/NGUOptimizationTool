@@ -1,0 +1,26 @@
+﻿@page "/counter"
+@inject StateContainer State
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@Message
+
+@code {
+    private int currentCount = 0;
+    private string Message = "Default";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Message = State.PlayerData.playerName;
+    }
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}

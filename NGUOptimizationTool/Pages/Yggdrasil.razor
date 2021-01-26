@@ -1,0 +1,55 @@
+﻿@page "/yggdrasil"
+@inject StateContainer State
+
+<h1 class="display-4">Yggdrasil</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fruit</th>
+            <th>Tier</th>
+            <th>Harvest mode</th>
+            <th>Using poop</th>
+            <th>Seeds spent</th>
+        </tr>
+    </thead>
+    @for (var i = 0; /*i < FruitInfo.Length &&*/ i < State.PlayerData.yggdrasil.fruits.Count; i++)
+    {
+        var fruit = State.PlayerData.yggdrasil.fruits[i];
+        <tr>
+            <td>@FruitInfo[i].Name</td>
+            <td>@fruit.maxTier</td>
+            <td>@(fruit.eatFruit ? "Eat" : "Harvest")</td>
+            <td>@fruit.usePoop</td>
+            <td>@FruitInfo[i].SeedsSpent(fruit.maxTier)</td>
+  
+        </tr>
+    }
+</table>
+
+@code{
+    private List<FruitData> FruitInfo = new List<FruitData>()
+    {
+        new FruitData("Fruit of Gold",1),
+        new FruitData("Fruit of Power α",10),
+        new FruitData("Fruit of Adventure",25),
+        new FruitData("Fruit of Knowledge",40),
+        new FruitData("Pomegranate",60),
+        new FruitData("Fruit of Luck",100),
+        new FruitData("Fruit of Power β",150),
+        new FruitData("Fruit of Arbitrariness",170),
+        new FruitData("Fruit of Numbers",200),
+        new FruitData("Fruit of Rage",2000),
+        new FruitData("Fruit of MacGuffin α",15000),
+        new FruitData("Fruit of Power δ",30000),
+        new FruitData("Watermelon",50000),
+        new FruitData("Fruit of MacGuffin β",100000),
+        new FruitData("Fruit of Quirks",25000),
+        new FruitData("Fruit of Angry Mayo",250000),
+        new FruitData("Fruit of Sad Mayo",250000),
+        new FruitData("Fruit of Moldy Mayo",250000),
+        new FruitData("Fruit of Ayy Lmayo",250000),
+        new FruitData("Fruit of Cinco De Mayo",250000),
+        new FruitData("Fruit of Pretty Mayo",250000)
+    };
+}

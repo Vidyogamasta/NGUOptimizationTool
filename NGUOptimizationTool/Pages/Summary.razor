@@ -1,0 +1,83 @@
+﻿@page "/summary"
+@inject StateContainer State
+
+    <div class="overview container">
+        <h1 class="display-4">Summary</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Total play time</th>
+                    <th>Total Exp</th>
+                    <th>Highest boss</th>
+                    <th>Titans defeated</th>
+                    <th>Total rebirths</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@((int)State.PlayerData.totalPlaytime.totalseconds / 86400) days @State.PlayerData.totalPlaytime.hours.ToString("00"):@State.PlayerData.totalPlaytime.minutes.ToString("00"):@(((int)State.PlayerData.totalPlaytime.seconds).ToString("00"))</td>
+                    <td>@State.PlayerData.stats.totalExp</td>
+                    <td>@State.PlayerData.stats.highestBoss</td>
+                    <td>@State.PlayerData.stats.titansDefeated</td>
+                    <td>@State.PlayerData.stats.rebirthNumber</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Adventure</h2>
+        <h3>I.T.O.P.O.D.</h3>
+        <table class="table">
+            <tr>
+                <th>Highest Floor</th>
+                <td>@State.PlayerData.adventure.highestItopodLevel</td>
+            </tr>
+            <tr>
+                <th>Total PP earned</th>
+                <td>@State.PlayerData.adventure.itopod.lifetimePoints</td>
+            </tr>
+            <tr>
+                <th>Enemies killed</th>
+                <td>@State.PlayerData.adventure.itopod.enemiesKilled</td>
+            </tr>
+        </table>
+
+        <h3>Items</h3>
+        <table class="table">
+            <tr>
+                <th>Cube power</th>
+                <td>@State.PlayerData.inventory.cubePower</td>
+            </tr>
+            <tr>
+                <th>Cube toughness</th>
+                <td>@State.PlayerData.inventory.cubeToughness</td>
+            </tr>
+            <tr>
+                <th>Total items discovered</th>
+                <td>@State.PlayerData.inventory.itemList.totalDiscovered</td>
+            </tr>
+            <tr>
+                <th>Total items maxxed</th>
+                <td>@State.PlayerData.inventory.itemList.totalMaxxed</td>
+            </tr>
+        </table>
+
+        <h3>Wandoos</h3>
+        <table class="table">
+            <tr>
+                <th>Wandoos 98 levels</th>
+                <td>@State.PlayerData.wandoos98.OSlevel</td>
+            </tr>
+            <tr>
+                <th>Money pit levels</th>
+                <td>@State.PlayerData.wandoos98.pitOSLevels</td>
+            </tr>
+            <tr>
+                <th>Wandoos XL levels</th>
+                <td>@State.PlayerData.wandoos98.XLLevels</td>
+            </tr>
+            <tr>
+                <th>I.T.O.P.O.D. levels</th>
+                <td>@(State.PlayerData.adventure.itopod.perkLevel[22]*2)</td>
+            </tr>
+        </table>
+    </div>
